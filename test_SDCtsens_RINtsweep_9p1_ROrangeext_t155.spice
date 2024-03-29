@@ -1,0 +1,214 @@
+** sch_path: /foss/designs/chipalooza/Chipalooza2024_TempSensor_AC3E_local_resize/test_SDCtsens_RINtsweep_9p1_ROrangeext.sch
+.lib /foss/pdks/sky130A/libs.tech/ngspice/sky130.lib.spice tt
+.include /foss/pdks/sky130A/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice
+
+**.subckt test_SDCtsens_RINtsweep_9p1_ROrangeext
+V1 VDD GND VDD
+V2 VSS GND 0
+X1 SENS_IN REF_IN DOUT VDD VSS net1 net2 SDC_v7p1_ROrangeext
+XR1 REF_IN net2 REF_IN sky130_fd_pr__res_high_po_5p73 L=8 mult=1 m=1
+XR3 SENS_IN net1 SENS_IN sky130_fd_pr__res_iso_pw W=180 L=30.5 m=1
+**** begin user architecture code
+
+*.lib /home/jorge/Documents/Postdoc/share/pdk/sky130A/libs.tech/ngspice/sky130.lib.spice tt
+.param VDD = 1.8
+.ic v(SENS_IN) = 0
+.ic v(REF_IN) = 1.8
+.option temp = 155
+.save v(DOUT)
+.control
+  run
+*compose vin_var start=1.9p stop=2.11p step=0.02p
+*compose vin_var start=8p stop=8.31p step=0.02p
+*compose vin_var start=0.15p stop=0.15p step=0.02p
+compose vin_var start=2.05k stop=2.05k step=0.02k
+foreach val $&vin_var
+  alter R_SENS $val
+  tran 0.1n 20u
+*  tran 0.1n 50u
+end
+*plot tran1.v(N2) tran2.v(N2) tran3.v(N2) tran4.v(N2) tran5.v(N2) tran6.v(N2) tran7.v(N2) tran8.v(N2) tran9.v(N2) tran10.v(N2) tran11.v(N2)
+*wrdata ringosc_CINsweep_v2p1_Creal.txt tran1.v(N2) tran2.v(N2) tran3.v(N2) tran4.v(N2) tran5.v(N2) tran6.v(N2) tran7.v(N2) tran8.v(N2) tran9.v(N2) tran10.v(N2) tran11.v(N2)
+*wrdata SDC_CINsweep_v5p7.txt tran1.v(DOUT) tran2.v(DOUT) tran3.v(DOUT) tran4.v(DOUT) tran5.v(DOUT) tran6.v(DOUT) tran7.v(DOUT) tran8.v(DOUT) tran9.v(DOUT) tran10.v(DOUT) tran11.v(DOUT) tran12.v(DOUT) tran13.v(DOUT) tran14.v(DOUT) tran15.v(DOUT) tran16.v(DOUT)
+*wrdata SDC_RINsweep_v2p1_CLOAD.txt tran1.v(DOUT_CLOAD) tran2.v(DOUT_CLOAD) tran3.v(DOUT_CLOAD) tran4.v(DOUT_CLOAD) tran5.v(DOUT_CLOAD) tran6.v(DOUT_CLOAD) tran7.v(DOUT_CLOAD) tran8.v(DOUT_CLOAD) tran9.v(DOUT_CLOAD) tran10.v(DOUT_CLOAD) tran11.v(DOUT_CLOAD) tran12.v(DOUT_CLOAD) tran13.v(DOUT_CLOAD) tran14.v(DOUT_CLOAD) tran15.v(DOUT_CLOAD) tran16.v(DOUT_CLOAD)
+*wrdata SDC_CINsweep_v5p7_CLOAD.txt tran1.v(DOUT_CLOAD)
+wrdata SDC_RINsweep_v9p1_CLOAD_t155.txt tran1.v(DOUT)
+.endc
+
+**** end user architecture code
+**.ends
+
+* expanding   symbol:  SDC_v7p1_ROrangeext.sym # of pins=7
+** sym_path: /foss/designs/chipalooza/Chipalooza2024_TempSensor_AC3E_local_resize/SDC_v7p1_ROrangeext.sym
+** sch_path: /foss/designs/chipalooza/Chipalooza2024_TempSensor_AC3E_local_resize/SDC_v7p1_ROrangeext.sch
+.subckt SDC_v7p1_ROrangeext SENS_IN REF_IN DOUT VDD VSS N3_S N3_R
+*.iopin VDD
+*.iopin VSS
+*.ipin SENS_IN
+*.ipin REF_IN
+*.opin DOUT
+*.ipin N3_S
+*.ipin N3_R
+XOSC_SENS SENS_IN N1_S N2_S VDD VSS net1 N3_S OSC_v7p1
+XOSC_REF REF_IN N1_R N2_R VDD VSS net2 N3_R OSC_v7p1
+XPG SENS_IN DOUT net1 VDD VSS PASSGATE_v1p2
+XPG1 REF_IN VDD net2 VDD VSS PASSGATE_v1p2
+X1 N2_S N2_R DOUT nDOUT VDD VSS DFF_v4p1
+.ends
+
+
+* expanding   symbol:  OSC_v7p1.sym # of pins=7
+** sym_path: /foss/designs/chipalooza/Chipalooza2024_TempSensor_AC3E_local_resize/OSC_v7p1.sym
+** sch_path: /foss/designs/chipalooza/Chipalooza2024_TempSensor_AC3E_local_resize/OSC_v7p1.sch
+.subckt OSC_v7p1 SENS_IN N1 N2 VDD VSS CON_CV N3
+*.ipin SENS_IN
+*.iopin VDD
+*.iopin VSS
+*.opin N1
+*.opin N2
+*.iopin CON_CV
+*.opin N3
+XST1 SENS_IN VDD VSS N1 N1 N1 INVandCAP_v4p1
+XST2 N1 VDD VSS net1 net1 net1 INVandCAP_v4p1
+XST3 net1 VDD VSS N3 CON_CV SENS_IN INVandCAP_v4p1
+XBUFFS net1 N2 VDD VSS BUFFMIN_v1p1
+.ends
+
+
+* expanding   symbol:  PASSGATE_v1p2.sym # of pins=5
+** sym_path: /foss/designs/chipalooza/Chipalooza2024_TempSensor_AC3E_local_resize/PASSGATE_v1p2.sym
+** sch_path: /foss/designs/chipalooza/Chipalooza2024_TempSensor_AC3E_local_resize/PASSGATE_v1p2.sch
+.subckt PASSGATE_v1p2 VIN CTR VOUT VDD VSS
+*.ipin VIN
+*.iopin VDD
+*.iopin VSS
+*.ipin CTR
+*.opin VOUT
+XMNSW VOUT CTR VIN VSS sky130_fd_pr__nfet_01v8 L=0.15 W=2 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29' pd='2*int((nf+1)/2) * (W/nf + 0.29)'
++ ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XMPSW VOUT net1 VIN VDD sky130_fd_pr__pfet_01v8 L=0.15 W=6 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29' pd='2*int((nf+1)/2) * (W/nf + 0.29)'
++ ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+X1 CTR net1 VDD VSS INVMIN_v1p1
+.ends
+
+
+* expanding   symbol:  DFF_v4p1.sym # of pins=6
+** sym_path: /foss/designs/chipalooza/Chipalooza2024_TempSensor_AC3E_local_resize/DFF_v4p1.sym
+** sch_path: /foss/designs/chipalooza/Chipalooza2024_TempSensor_AC3E_local_resize/DFF_v4p1.sch
+.subckt DFF_v4p1 IN CLK D ND VDD GND
+*.ipin IN
+*.ipin CLK
+*.iopin VDD
+*.iopin GND
+*.opin ND
+*.opin D
+XMN_NIN NDIFF IN GND GND sky130_fd_pr__nfet_01v8 L=0.15 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XMP_NINCLK NDIFF CLK net1 VDD sky130_fd_pr__pfet_01v8 L=0.15 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XMP_NIN net1 IN VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29' pd='2*int((nf+1)/2) * (W/nf + 0.29)'
++ ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XMN_NIN1 PDIFF NDIFF GND GND sky130_fd_pr__nfet_01v8 L=0.15 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XMP_NINCLK1 PDIFF CLK net2 VDD sky130_fd_pr__pfet_01v8 L=0.15 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XMP_NIN1 net2 NDIFF VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XMN_NIN2 net3 CLK GND GND sky130_fd_pr__nfet_01v8 L=0.15 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XMN_POUTT ND PDIFF net3 GND sky130_fd_pr__nfet_01v8 L=0.15 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XMN_POUTT1 D NDIFF net4 GND sky130_fd_pr__nfet_01v8 L=0.15 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XMN_POUTT2 D ND GND GND sky130_fd_pr__nfet_01v8 L=0.15 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29' pd='2*int((nf+1)/2) * (W/nf + 0.29)'
++ ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XMP_NIN2 D ND VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29' pd='2*int((nf+1)/2) * (W/nf + 0.29)'
++ ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XMN_POUTT3 ND D GND GND sky130_fd_pr__nfet_01v8 L=0.15 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29' pd='2*int((nf+1)/2) * (W/nf + 0.29)'
++ ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XMP_NIN3 ND D VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29' pd='2*int((nf+1)/2) * (W/nf + 0.29)'
++ ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XMN_NIN3 net4 CLK GND GND sky130_fd_pr__nfet_01v8 L=0.15 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+.ends
+
+
+* expanding   symbol:  INVandCAP_v4p1.sym # of pins=6
+** sym_path: /foss/designs/chipalooza/Chipalooza2024_TempSensor_AC3E_local_resize/INVandCAP_v4p1.sym
+** sch_path: /foss/designs/chipalooza/Chipalooza2024_TempSensor_AC3E_local_resize/INVandCAP_v4p1.sch
+.subckt INVandCAP_v4p1 VIN VDD VSS VOUT CON_CV CON_CBASE
+*.ipin VIN
+*.iopin VDD
+*.iopin VSS
+*.opin VOUT
+*.iopin CON_CV
+*.iopin CON_CBASE
+XINV_OSC VIN VOUT VDD VSS INV_v1p1
+XCN CON_CV CON_CBASE VSS CAPOSC_v3p1
+.ends
+
+
+* expanding   symbol:  BUFFMIN_v1p1.sym # of pins=4
+** sym_path: /foss/designs/chipalooza/Chipalooza2024_TempSensor_AC3E_local_resize/BUFFMIN_v1p1.sym
+** sch_path: /foss/designs/chipalooza/Chipalooza2024_TempSensor_AC3E_local_resize/BUFFMIN_v1p1.sch
+.subckt BUFFMIN_v1p1 VIN VOUT VDD VSS
+*.iopin VDD
+*.iopin VSS
+*.ipin VIN
+*.opin VOUT
+X1 VIN net1 VDD VSS INVMIN_v1p1
+X2 net1 VOUT VDD VSS INVMIN_v1p1
+.ends
+
+
+* expanding   symbol:  INVMIN_v1p1.sym # of pins=4
+** sym_path: /foss/designs/chipalooza/Chipalooza2024_TempSensor_AC3E_local_resize/INVMIN_v1p1.sym
+** sch_path: /foss/designs/chipalooza/Chipalooza2024_TempSensor_AC3E_local_resize/INVMIN_v1p1.sch
+.subckt INVMIN_v1p1 VIN VOUT VDD VSS
+*.ipin VIN
+*.iopin VDD
+*.iopin VSS
+*.opin VOUT
+XM1 VOUT VIN VSS VSS sky130_fd_pr__nfet_01v8 L=0.15 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29' pd='2*int((nf+1)/2) * (W/nf + 0.29)'
++ ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XM2 VOUT VIN VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29' pd='2*int((nf+1)/2) * (W/nf + 0.29)'
++ ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+.ends
+
+
+* expanding   symbol:  INV_v1p1.sym # of pins=4
+** sym_path: /foss/designs/chipalooza/Chipalooza2024_TempSensor_AC3E_local_resize/INV_v1p1.sym
+** sch_path: /foss/designs/chipalooza/Chipalooza2024_TempSensor_AC3E_local_resize/INV_v1p1.sch
+.subckt INV_v1p1 VIN VOUT VDD VSS
+*.ipin VIN
+*.iopin VDD
+*.iopin VSS
+*.opin VOUT
+xinvosc[0] VIN VSS VSS VDD VDD VOUT sky130_fd_sc_hd__inv_2
+xinvosc[1] VIN VSS VSS VDD VDD VOUT sky130_fd_sc_hd__inv_2
+xinvosc[2] VIN VSS VSS VDD VDD VOUT sky130_fd_sc_hd__inv_2
+xinvosc[3] VIN VSS VSS VDD VDD VOUT sky130_fd_sc_hd__inv_2
+xinvosc[4] VIN VSS VSS VDD VDD VOUT sky130_fd_sc_hd__inv_2
+xinvosc[5] VIN VSS VSS VDD VDD VOUT sky130_fd_sc_hd__inv_2
+.ends
+
+
+* expanding   symbol:  CAPOSC_v3p1.sym # of pins=3
+** sym_path: /foss/designs/chipalooza/Chipalooza2024_TempSensor_AC3E_local_resize/CAPOSC_v3p1.sym
+** sch_path: /foss/designs/chipalooza/Chipalooza2024_TempSensor_AC3E_local_resize/CAPOSC_v3p1.sch
+.subckt CAPOSC_v3p1 TOP_V TOP_B BOT
+*.iopin TOP_V
+*.iopin TOP_B
+*.iopin BOT
+XC1_V TOP_V BOT sky130_fd_pr__cap_mim_m3_1 W=10 L=10 MF=1 m=1
+XC2_V TOP_V BOT sky130_fd_pr__cap_mim_m3_2 W=10 L=10 MF=1 m=1
+XC1_B TOP_B BOT sky130_fd_pr__cap_mim_m3_1 W=10 L=10 MF=1 m=1
+XC2_B TOP_B BOT sky130_fd_pr__cap_mim_m3_2 W=10 L=10 MF=1 m=1
+XC5_B TOP_B BOT sky130_fd_pr__cap_mim_m3_1 W=10 L=10 MF=1 m=1
+XC6_B TOP_B BOT sky130_fd_pr__cap_mim_m3_2 W=10 L=10 MF=1 m=1
+XC3_B TOP_B BOT sky130_fd_pr__cap_mim_m3_1 W=10 L=10 MF=1 m=1
+XC4_B TOP_B BOT sky130_fd_pr__cap_mim_m3_2 W=10 L=10 MF=1 m=1
+.ends
+
+.GLOBAL GND
+.end
