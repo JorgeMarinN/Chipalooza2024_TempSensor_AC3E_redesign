@@ -1,0 +1,53 @@
+magic
+tech sky130A
+timestamp 1645198197
+<< locali >>
+rect 18 594 1347 611
+rect 18 18 1155 35
+<< metal1 >>
+rect 72 513 1293 527
+rect 304 401 336 404
+rect 304 375 307 401
+rect 333 375 336 401
+rect 304 372 336 375
+rect 759 401 791 404
+rect 759 375 762 401
+rect 788 375 791 401
+rect 759 372 791 375
+rect 1214 401 1246 404
+rect 1214 375 1217 401
+rect 1243 375 1246 401
+rect 1214 372 1246 375
+<< via1 >>
+rect 307 375 333 401
+rect 762 375 788 401
+rect 1217 375 1243 401
+<< metal2 >>
+rect 304 401 1246 404
+rect 304 375 307 401
+rect 333 375 762 401
+rect 788 375 1217 401
+rect 1243 375 1246 401
+rect 304 372 1246 375
+use INV_v1p1  INV_v1p1_a_0
+timestamp 1641587603
+transform 1 0 -683 0 1 89
+box 683 -89 1138 540
+use INV_v1p1  INV_v1p1_a_1
+timestamp 1641587603
+transform 1 0 -228 0 1 89
+box 683 -89 1138 540
+use INV_v1p1  INV_v1p1_a_2
+timestamp 1641587603
+transform 1 0 227 0 1 89
+box 683 -89 1138 540
+<< labels >>
+flabel locali 31 601 31 601 0 FreeSans 800 0 0 0 VDD
+port 0 nsew
+flabel locali 1146 26 1146 26 0 FreeSans 800 0 0 0 VSS
+port 1 nsew
+flabel space 155 359 155 359 0 FreeSans 800 0 0 0 VIN
+port 2 nsew
+flabel metal1 1277 521 1277 521 0 FreeSans 800 0 0 0 VOUT
+port 3 nsew
+<< end >>
