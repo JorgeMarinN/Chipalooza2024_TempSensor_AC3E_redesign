@@ -14,7 +14,7 @@ XR3 SENS_IN net1 SENS_IN sky130_fd_pr__res_iso_pw W=180 L=30.5 m=1
 .param VDD = 1.8
 .ic v(SENS_IN) = 0
 .ic v(REF_IN) = 1.8
-.option temp = -30
+.option temp = -40
 .save v(DOUT)
 .control
   run
@@ -32,7 +32,7 @@ end
 *wrdata SDC_CINsweep_v5p7.txt tran1.v(DOUT) tran2.v(DOUT) tran3.v(DOUT) tran4.v(DOUT) tran5.v(DOUT) tran6.v(DOUT) tran7.v(DOUT) tran8.v(DOUT) tran9.v(DOUT) tran10.v(DOUT) tran11.v(DOUT) tran12.v(DOUT) tran13.v(DOUT) tran14.v(DOUT) tran15.v(DOUT) tran16.v(DOUT)
 *wrdata SDC_RINsweep_v2p1_CLOAD.txt tran1.v(DOUT_CLOAD) tran2.v(DOUT_CLOAD) tran3.v(DOUT_CLOAD) tran4.v(DOUT_CLOAD) tran5.v(DOUT_CLOAD) tran6.v(DOUT_CLOAD) tran7.v(DOUT_CLOAD) tran8.v(DOUT_CLOAD) tran9.v(DOUT_CLOAD) tran10.v(DOUT_CLOAD) tran11.v(DOUT_CLOAD) tran12.v(DOUT_CLOAD) tran13.v(DOUT_CLOAD) tran14.v(DOUT_CLOAD) tran15.v(DOUT_CLOAD) tran16.v(DOUT_CLOAD)
 *wrdata SDC_CINsweep_v5p7_CLOAD.txt tran1.v(DOUT_CLOAD)
-wrdata SDC_RINsweep_v9p1_CLOAD_tm30.txt tran1.v(DOUT)
+wrdata SDC_RINsweep_v9p1_CLOAD_tm40.txt tran1.v(DOUT)
 .endc
 
 **** end user architecture code
@@ -204,8 +204,6 @@ XC1_V TOP_V BOT sky130_fd_pr__cap_mim_m3_1 W=10 L=10 MF=1 m=1
 XC2_V TOP_V BOT sky130_fd_pr__cap_mim_m3_2 W=10 L=10 MF=1 m=1
 XC1_B TOP_B BOT sky130_fd_pr__cap_mim_m3_1 W=10 L=10 MF=1 m=1
 XC2_B TOP_B BOT sky130_fd_pr__cap_mim_m3_2 W=10 L=10 MF=1 m=1
-XC5_B TOP_B BOT sky130_fd_pr__cap_mim_m3_1 W=10 L=10 MF=1 m=1
-XC6_B TOP_B BOT sky130_fd_pr__cap_mim_m3_2 W=10 L=10 MF=1 m=1
 XC3_B TOP_B BOT sky130_fd_pr__cap_mim_m3_1 W=10 L=10 MF=1 m=1
 XC4_B TOP_B BOT sky130_fd_pr__cap_mim_m3_2 W=10 L=10 MF=1 m=1
 .ends

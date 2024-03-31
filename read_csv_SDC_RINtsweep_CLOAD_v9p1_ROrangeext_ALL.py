@@ -3,6 +3,25 @@ import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
 
+def calculate_linearity_error(x, y):
+    # Calculate the coefficients (slope and intercept) of the linear regression line
+    slope, intercept = np.polyfit(x, y, 1)
+
+    # Calculate the predicted y values using the linear regression equation
+    y_pred = slope * np.array(x) + intercept
+
+    # Calculate the linearity error for each point
+    linearity_errors = np.abs(np.array(y) - y_pred)
+
+    # Find the maximum linearity error
+    max_linearity_error = np.max(linearity_errors)
+
+    return max_linearity_error, slope, intercept, y_pred
+
+
+
+
+
 i = 0 # DOUT
 
 
@@ -440,18 +459,32 @@ print(DOUT14)
 
 #################################################################
 	
-DOUT_ALL = [DOUT1,DOUT2,DOUT3,DOUT4,DOUT5,DOUT6,DOUT7,DOUT8,DOUT9,DOUT10,DOUT11,DOUT12,DOUT13,DOUT14]	
+#DOUT_ALL = [DOUT1,DOUT2,DOUT3,DOUT4,DOUT5,DOUT6,DOUT7,DOUT8,DOUT9,DOUT10,DOUT11,DOUT12,DOUT13,DOUT14]
+DOUT_ALL = [DOUT1,DOUT2,DOUT3,DOUT4,DOUT5,DOUT6,DOUT7,DOUT8,DOUT9,DOUT10,DOUT11,DOUT12]	
+#x = [-40,-25,-10,5,20,35,50,65,80,95,110,125,140,155]	
+x = [-40,-25,-10,5,20,35,50,65,80,95,110,125]
 	
 np.savetxt("DATA_RINtsweep_v9p1.csv", DOUT_ALL, delimiter=",")
+
+max_error, slope, intercept, y_pred = calculate_linearity_error(x, DOUT_ALL)
 
 # plot points not lines
 #plt.plot([1.7,1.72,1.74,1.76,1.78,1.8,1.82,1.84,1.86,1.88,1.9,1.92,1.94,1.96,1.98,2],DOUT1,linestyle="",marker="o", label='27°C')
 #plt.plot([-40,-25,-10,5,20,35,50,65,80,95,110,125,140,155],DOUT_ALL,linestyle="",marker="x")
-plt.plot([-40,-25,-10,5,20,35,50,65,80,95,110,125,140,155],DOUT_ALL)
+#plt.plot(x,DOUT_ALL)
+plt.scatter(x, DOUT_ALL, label='Original Data')
+plt.plot(x, y_pred, color='red', label='Linearized Curve')
 plt.xlabel("Temperature [°C]")
 plt.ylabel("DOUT_average_CLOAD")
+#plt.title('Linearized Curve with Original Data')
 #plt.legend()
+#plt.grid(True)
 plt.show()
+
+
+print("Maximum Linearity Error [%FS]:", max_error*100/1.8)
+print("Slope:", slope)
+print("Intercept:", intercept)
 
 #plt.plot([1.9e-12,1.92e-12,1.94e-12,1.96e-12,1.98e-12,2e-12,2.02e-12,2.04e-12,2.06e-12,2.08e-12,2.1e-12],frq)
 #plt.show()
