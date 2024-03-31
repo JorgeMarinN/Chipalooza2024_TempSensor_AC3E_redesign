@@ -1,4 +1,5 @@
-v {xschem version=3.0.0 file_version=1.2 }
+v {xschem version=3.4.5 file_version=1.2
+}
 G {}
 K {}
 V {}
@@ -55,7 +56,7 @@ N 295 335 1210 335 { lab=SENS_IN}
 N 1210 100 1210 335 { lab=SENS_IN}
 N 1135 100 1210 100 { lab=SENS_IN}
 N 1125 220 1125 240 { lab=VSS}
-C {devices/code_shown.sym} 50 -470 0 0 {name=SPICE only_toplevel=false value=".lib /home/jorge/Documents/Postdoc/share/pdk/sky130A/libs.tech/ngspice/sky130.lib.spice tt
+C {devices/code_shown.sym} 50 -470 0 0 {name=SPICE only_toplevel=false value="*.lib /home/jorge/Documents/Postdoc/share/pdk/sky130A/libs.tech/ngspice/sky130.lib.spice tt
 .param VDD = 1.8
 .ic v(SENS_IN) = 1.8
 *.option temp = -40
@@ -99,3 +100,11 @@ C {devices/lab_pin.sym} 1155 -25 0 0 {name=l10 sig_type=std_logic lab=TOP_V}
 C {devices/lab_pin.sym} 1245 -25 0 1 {name=l12 sig_type=std_logic lab=SENS_IN}
 C {devices/lab_pin.sym} 835 140 0 1 {name=l13 sig_type=std_logic lab=VSS}
 C {devices/lab_pin.sym} 1125 240 0 0 {name=l11 sig_type=std_logic lab=VSS}
+C {devices/code.sym} 1140 -490 0 0 {name=TT_MODELS
+only_toplevel=true
+format="tcleval(@value )"
+value=".lib $::SKYWATER_MODELS/sky130.lib.spice tt
+.include $::SKYWATER_STDCELLS/sky130_fd_sc_hd.spice
+"
+spice_ignore=false
+place=header}
