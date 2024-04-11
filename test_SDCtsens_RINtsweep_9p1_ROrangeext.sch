@@ -16,8 +16,8 @@ N 570 70 660 70 { lab=SENS_IN}
 N 620 190 660 190 { lab=REF_IN}
 N 550 190 620 190 { lab=REF_IN}
 N 570 -20 720 -20 { lab=#net1}
-N 550 270 720 270 { lab=#net2}
-N 720 240 720 270 { lab=#net2}
+N 550 270 720 270 { lab=N3R}
+N 720 240 720 270 { lab=N3R}
 N 570 50 570 70 { lab=SENS_IN}
 N 530 20 550 20 { lab=SENS_IN}
 N 530 20 530 60 { lab=SENS_IN}
@@ -27,11 +27,11 @@ N 550 170 550 190 { lab=REF_IN}
 N 510 140 530 140 { lab=REF_IN}
 N 510 140 510 180 { lab=REF_IN}
 N 510 180 550 180 { lab=REF_IN}
-N 480 270 550 270 { lab=#net2}
-N 390 110 390 270 { lab=#net2}
-N 480 110 550 110 { lab=#net2}
-N 390 270 480 270 { lab=#net2}
-N 390 110 480 110 { lab=#net2}
+N 480 270 550 270 { lab=N3R}
+N 390 110 390 270 { lab=N3R}
+N 480 110 550 110 { lab=N3R}
+N 390 270 480 270 { lab=N3R}
+N 390 110 480 110 { lab=N3R}
 C {devices/vsource.sym} 210 30 0 0 {name=V1 value=VDD}
 C {devices/gnd.sym} 210 80 0 0 {name=l2 lab=GND}
 C {devices/code_shown.sym} 190 -530 0 0 {name=SPICE only_toplevel=false value="*.lib /home/jorge/Documents/Postdoc/share/pdk/sky130A/libs.tech/ngspice/sky130.lib.spice tt
@@ -39,7 +39,7 @@ C {devices/code_shown.sym} 190 -530 0 0 {name=SPICE only_toplevel=false value="*
 .ic v(SENS_IN) = 0
 .ic v(REF_IN) = 1.8
 .option temp = -40
-.save v(DOUT)
+.save v(DOUT) v(N3R)
 .control
   run
 *compose vin_var start=1.9p stop=2.11p step=0.02p
@@ -57,6 +57,7 @@ end
 *wrdata SDC_RINsweep_v2p1_CLOAD.txt tran1.v(DOUT_CLOAD) tran2.v(DOUT_CLOAD) tran3.v(DOUT_CLOAD) tran4.v(DOUT_CLOAD) tran5.v(DOUT_CLOAD) tran6.v(DOUT_CLOAD) tran7.v(DOUT_CLOAD) tran8.v(DOUT_CLOAD) tran9.v(DOUT_CLOAD) tran10.v(DOUT_CLOAD) tran11.v(DOUT_CLOAD) tran12.v(DOUT_CLOAD) tran13.v(DOUT_CLOAD) tran14.v(DOUT_CLOAD) tran15.v(DOUT_CLOAD) tran16.v(DOUT_CLOAD)
 *wrdata SDC_CINsweep_v5p7_CLOAD.txt tran1.v(DOUT_CLOAD)
 wrdata SDC_RINsweep_v9p1_CLOAD_tm40.txt tran1.v(DOUT)
+*wrdata dataSDC_ringoscREF_v1p1.txt tran1.v(N3R)
 .endc"}
 C {devices/lab_pin.sym} 610 70 3 0 {name=l5 sig_type=std_logic lab=SENS_IN}
 C {devices/lab_pin.sym} 210 -50 0 0 {name=l6 sig_type=std_logic lab=VDD}
@@ -89,3 +90,4 @@ value=".lib $::SKYWATER_MODELS/sky130.lib.spice tt
 "
 spice_ignore=false
 place=header}
+C {devices/lab_pin.sym} 670 270 3 0 {name=l1 sig_type=std_logic lab=N3R}
